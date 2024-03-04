@@ -1,0 +1,6 @@
+﻿Task,Iteration 01,Iteration 02,Iteration 03,Iteration 04,Iteration 05
+Year wise carrier delay from 2003-2010,9.717,0.601,0.608,0.505,0.482
+Year wise NAS delay from 2003-2010,0.398,7.543,0.448,0.415,0.407
+Year wise Weather delay from 2003-2010,0.364,0.305,0.36,0.319,0.432
+Year wise late aircraft delay from 2003-2010,0.356,0.311,0.273,0.344,0.343
+Year wise security delay from 2003-2010,0.291,0.293,0.31,0.299,0.283
