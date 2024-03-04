@@ -1,0 +1,106 @@
+--------------------------------
+
+Spark-sql
+
+---------------------------
+
+
+create the table: 
+
+
+CREATE TABLE delayed_flights (
+    Index INT,
+    Year INT,
+    Month INT,
+    DayofMonth INT,
+    DayOfWeek INT,
+    DepTime INT,
+    CRSDepTime INT,
+    ArrTime DOUBLE,
+    CRSArrTime INT,
+    UniqueCarrier STRING,
+    FlightNum INT,
+    TailNum STRING,
+    ActualElapsedTime DOUBLE,
+    CRSElapsedTime INT,
+    AirTime DOUBLE,
+    ArrDelay DOUBLE,
+    DepDelay INT,
+    Origin STRING,
+    Dest STRING,
+    Distance INT,
+    TaxiIn DOUBLE,
+    TaxiOut INT,
+    Cancelled INT,
+    CancellationCode STRING,
+    Diverted INT,
+    CarrierDelay DOUBLE,
+    WeatherDelay DOUBLE,
+    NASDelay DOUBLE,
+    SecurityDelay DOUBLE,
+    LateAircraftDelay DOUBLE
+)
+USING csv
+OPTIONS (path 's3://flightdetails91/DelayedFlights-updated.csv', header 'true');
+
+
+
+
+---------------------------------------------
+Year-wise Carrier Delay:
+
+SELECT Year, SUM(CarrierDelay) AS TotalCarrierDelay
+FROM delayed_flights
+WHERE Year BETWEEN 2003 AND 2010
+GROUP BY Year
+ORDER BY Year;
+
+
+
+----------------------------------------------
+
+Year-wise NAS Delay:
+
+SELECT Year, SUM(NASDelay) AS TotalNASDelay
+FROM delayed_flights
+WHERE Year BETWEEN 2003 AND 2010
+GROUP BY Year
+ORDER BY Year;
+
+----------------------------------------------
+
+Year-wise Weather Delay:
+
+SELECT Year, SUM(WeatherDelay) AS TotalWeatherDelay
+FROM delayed_flights
+WHERE Year BETWEEN 2003 AND 2010
+GROUP BY Year
+ORDER BY Year;
+
+
+------------------------------------------------
+Year-wise Late Aircraft Delay:
+
+SELECT Year, SUM(LateAircraftDelay) AS TotalLateAircraftDelay
+FROM delayed_flights
+WHERE Year BETWEEN 2003 AND 2010
+GROUP BY Year
+ORDER BY Year;
+
+
+------------------------------------------------
+
+Year-wise Security Delay:
+
+SELECT Year, SUM(SecurityDelay) AS TotalSecurityDelay
+FROM delayed_flights
+WHERE Year BETWEEN 2003 AND 2010
+GROUP BY Year
+ORDER BY Year;
+
+
+
+
+
+
+
