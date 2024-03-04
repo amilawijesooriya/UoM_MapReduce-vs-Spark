@@ -1,0 +1,113 @@
+
+Hive SQL SQL queries on Hadoop MapReduce
+---------------------------------------------------
+
+Creating the table:
+
+
+CREATE TABLE delayed_flights (
+    `index` INT,
+    Year INT,
+    Month INT,
+    DayofMonth INT,
+    DayOfWeek INT,
+    DepTime INT,
+    CRSDepTime INT,
+    ArrTime DOUBLE,
+    CRSArrTime INT,
+    UniqueCarrier STRING,
+    FlightNum INT,
+    TailNum STRING,
+    ActualElapsedTime DOUBLE,
+    CRSElapsedTime DOUBLE,
+    AirTime DOUBLE,
+    ArrDelay DOUBLE,
+    DepDelay DOUBLE,
+    Origin STRING,
+    Dest STRING,
+    Distance INT,
+    TaxiIn DOUBLE,
+    TaxiOut DOUBLE,
+    Cancelled INT,
+    CancellationCode STRING,
+    Diverted INT,
+    CarrierDelay DOUBLE,
+    WeatherDelay DOUBLE,
+    NASDelay DOUBLE,
+    SecurityDelay DOUBLE,
+    LateAircraftDelay DOUBLE
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE;
+
+
+------------------------------------------------------
+
+Loading the CSV to the table
+
+LOAD DATA INPATH 's3://flightdetails91/DelayedFlights_header_removed.csv' INTO TABLE delayed_flights;
+
+use the S3 buckets file URI
+
+
+-----------------------------------------------------------
+
+
+Verifying the DATA
+
+SELECT * FROM delayed_flights LIMIT 10;
+
+------------------------------------------------------
+
+
+Year wise carrier delayed_flights
+
+SELECT Year, SUM(CarrierDelay) AS TotalCarrierDelay
+FROM delayed_flights_new
+WHERE Year BETWEEN 2003 AND 2010 AND CarrierDelay IS NOT NULL
+GROUP BY Year
+ORDER BY Year;
+
+
+
+--------------------------------------
+
+Year wise NAS delayed_flights
+
+SELECT Year, SUM(NASDelay) AS TotalNASDelay
+FROM delayed_flights_new
+WHERE Year BETWEEN 2003 AND 2010 AND NASDelay IS NOT NULL
+GROUP BY Year
+ORDER BY Year;
+
+
+-------------------------------------
+
+Year wise Weather DelayedFlights-updated
+
+SELECT Year, SUM(WeatherDelay) AS TotalWeatherDelay
+FROM delayed_flights_new
+WHERE Year BETWEEN 2003 AND 2010 AND WeatherDelay IS NOT NULL
+GROUP BY Year
+ORDER BY Year;
+
+
+Year wise Late Aircraft DelayedFlights-updated
+
+
+SELECT Year, SUM(LateAircraftDelay) AS TotalLateAircraftDelay
+FROM delayed_flights_new
+WHERE Year BETWEEN 2003 AND 2010 AND LateAircraftDelay IS NOT NULL
+GROUP BY Year
+ORDER BY Year;
+
+
+Year wise Security Delay 
+
+SELECT Year, SUM(SecurityDelay) AS TotalSecurityDelay
+FROM delayed_flights_new
+WHERE Year BETWEEN 2003 AND 2010 AND SecurityDelay IS NOT NULL
+GROUP BY Year
+ORDER BY Year;
+
